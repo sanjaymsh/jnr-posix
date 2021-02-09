@@ -1,8 +1,52 @@
-os: linux
-arch:
-  - amd64
-  - ppc64le
-jdk: openjdk11
-script:
-   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-   - mvn test -B
+language: java
+
+matrix:
+   include:
+     - os: linux
+       dist: trusty
+       jdk: openjdk7
+       arch: amd64
+     - os: linux
+       jdk: openjdk8
+       arch: amd64
+     - os: linux
+       jdk: openjdk9
+       arch: amd64
+     - os: linux
+       jdk: openjdk10
+       arch: amd64
+     - os: linux
+       jdk: openjdk11
+       arch: amd64
+     - os: linux
+       dist: trusty
+       jdk: openjdk7
+       arch: ppc64le
+     - os: linux
+       jdk: openjdk8
+       arch: ppc64le
+     - os: linux
+       jdk: openjdk9
+       arch: ppc64le
+     - os: linux
+       jdk: openjdk10
+       arch: ppc64le
+     - os: linux
+       jdk: openjdk11
+       arch: ppc64le
+     - os: osx
+       osx_image: xcode9.3
+     - os: osx
+       jdk: openjdk11
+       osx_image: xcode10.1
+
+dist: xenial
+
+notifications:
+      irc:
+         channels:
+             - "irc.freenode.org#jnr"
+          on_success: change
+          on_failure: always
+          template:
+             - "%{repository} (%{branch}:%{commit} by %{author}): %{message} (%{build_url})"
